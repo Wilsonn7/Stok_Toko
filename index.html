@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stok Toko</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header-card">
+        <div>
+          <p class="label">Aplikasi stok</p>
+          <h1>Stok Toko</h1>
+        </div>
+      </header>
+
+      <nav class="top-nav" aria-label="Navigasi fitur utama">
+        <button class="nav-tab active" type="button" data-target="section-tambah">Tambah Stok</button>
+        <button class="nav-tab" type="button" data-target="section-cari">Cari Barang</button>
+        <button class="nav-tab" type="button" data-target="section-riwayat">Riwayat</button>
+      </nav>
+
+      <section class="summary-grid">
+        <div class="summary-card income">
+          <p>Total Pemasukan</p>
+          <h3 id="totalPemasukan">Rp 0</h3>
+        </div>
+
+        <div class="summary-card expense">
+          <p>Total Pengeluaran</p>
+          <h3 id="totalPengeluaran">Rp 0</h3>
+        </div>
+
+        <div class="summary-card net">
+          <p>Keuntungan Bersih</p>
+          <h3 id="keuntunganBersih">Rp 0</h3>
+          <button type="button" class="btn btn-reset" data-aksi="reset-keuntungan-bersih">Reset Keuntungan Bersih</button>
+        </div>
+      </section>
+
+      <section id="section-tambah" class="page-section active">
+        <div class="card">
+          <h2>Tambah Barang</h2>
+          <form id="formBarang" class="form-grid">
+            <div class="field">
+              <label for="namaBarang">Nama barang</label>
+              <input id="namaBarang" name="namaBarang" type="text" placeholder="Contoh: Beras" required />
+            </div>
+
+            <div class="field">
+              <label for="kategoriBarang">Kategori</label>
+              <select id="kategoriBarang" name="kategoriBarang">
+                <option value="Sembako">Sembako</option>
+                <option value="Minuman">Minuman</option>
+                <option value="Snack">Snack</option>
+                <option value="Kebersihan">Kebersihan</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="satuanBarang">Satuan</label>
+              <select id="satuanBarang" name="satuanBarang">
+                <option value="pcs">pcs</option>
+                <option value="kg">kg</option>
+                <option value="liter">liter</option>
+                <option value="bungkus">bungkus</option>
+                <option value="dus">dus</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="hargaBeliBarang">Harga beli</label>
+              <input id="hargaBeliBarang" name="hargaBeliBarang" type="number" min="0" step="100" placeholder="12000" required />
+            </div>
+
+            <div class="field">
+              <label for="hargaJualBarang">Harga jual</label>
+              <input id="hargaJualBarang" name="hargaJualBarang" type="number" min="0" step="100" placeholder="15000" required />
+            </div>
+
+            <div class="field">
+              <label for="stokAwalBarang">Stok awal</label>
+              <input id="stokAwalBarang" name="stokAwalBarang" type="number" min="0" step="1" placeholder="20" required />
+            </div>
+
+            <div class="field">
+              <label for="stokMinimumBarang">Stok minimum</label>
+              <input id="stokMinimumBarang" name="stokMinimumBarang" type="number" min="0" step="1" placeholder="5" required />
+            </div>
+
+            <div class="form-action">
+              <button type="submit" class="btn btn-primary">Tambah Barang</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="section-cari" class="page-section">
+        <div class="card">
+          <div class="toolbar">
+            <div class="search-box">
+              <label for="pencarianBarang">Cari nama barang</label>
+              <input id="pencarianBarang" type="text" placeholder="Cari barang..." />
+            </div>
+
+            <div class="search-box">
+              <label for="filterKategori">Filter kategori</label>
+              <select id="filterKategori">
+                <option value="semua">Semua</option>
+                <option value="Sembako">Sembako</option>
+                <option value="Minuman">Minuman</option>
+                <option value="Snack">Snack</option>
+                <option value="Kebersihan">Kebersihan</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nama</th>
+                  <th>Kategori</th>
+                  <th>Stok</th>
+                  <th>Satuan</th>
+                  <th>Harga Beli</th>
+                  <th>Harga Jual</th>
+                  <th>Stok Minimum</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tabelBarang"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-riwayat" class="page-section">
+        <div class="card">
+          <div class="history-toolbar">
+            <div class="filter-group">
+              <label for="filterHistoryJenis">Jenis transaksi</label>
+              <select id="filterHistoryJenis">
+                <option value="semua">Semua</option>
+                <option value="masuk">Masuk</option>
+                <option value="terjual">Keluar</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filterHistoryKategori">Kategori</label>
+              <select id="filterHistoryKategori">
+                <option value="semua">Semua</option>
+                <option value="Sembako">Sembako</option>
+                <option value="Minuman">Minuman</option>
+                <option value="Snack">Snack</option>
+                <option value="Kebersihan">Kebersihan</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+
+            <div class="filter-group filter-wide">
+              <label for="filterHistoryNama">Cari nama barang</label>
+              <input id="filterHistoryNama" type="text" placeholder="Cari nama transaksi..." />
+            </div>
+
+            <div class="filter-group">
+              <label for="sortHistoryField">Urutkan</label>
+              <select id="sortHistoryField">
+                <option value="tanggal">Tanggal</option>
+                <option value="nama">Nama barang</option>
+                <option value="kategori">Kategori</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="sortHistoryDirection">Arah</label>
+              <select id="sortHistoryDirection">
+                <option value="desc">Terbaru</option>
+                <option value="asc">Terlama</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Kategori</th>
+                  <th>Jenis</th>
+                  <th>Nama Barang</th>
+                  <th>Waktu Transaksi</th>
+                  <th>Jumlah</th>
+                  <th>Harga Satuan</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="tabelRiwayat"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
